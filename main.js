@@ -8,6 +8,7 @@ const jsonfile = require('jsonfile')
 const reproject = require('reproject')
 const epsg = require('epsg')
 const proj4 = require('proj4')
+var cors = require('cors')
 
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
@@ -22,6 +23,10 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage})
 
+app.use(cors({
+    origin: "*",
+    credentials: true
+}))
 
 app.post('/dwg', upload.single('file'), async (req, res, next) => {
     try {
